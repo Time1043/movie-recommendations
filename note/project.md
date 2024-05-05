@@ -186,7 +186,7 @@
 
   内层模块：
 
-  movie-recommendations\MovieRecommendSystem\pom.xml
+  MovieRecommendSystem
 
   ```xml
   <?xml version="1.0" encoding="UTF-8"?>
@@ -310,7 +310,7 @@
   </project>
   ```
   
-  movie-recommendations\MovieRecommendSystem\recommender\pom.xml
+  MovieRecommendSystem\recommender
   
   ```xml
   <?xml version="1.0" encoding="UTF-8"?>
@@ -378,7 +378,7 @@
   </project>
   ```
   
-  movie-recommendations\MovieRecommendSystem\recommender\DataLoader\pom.xml
+  MovieRecommendSystem\recommender\DataLoader
   
   ```xml
   <?xml version="1.0" encoding="UTF-8"?>
@@ -576,10 +576,21 @@
   case class ESConfig(httpHosts: String, transportHosts: String, index: String, clusterName: String)
   ```
 
-- 草稿
+- 草稿 (定义常量 + 主要过程)
 
   ```scala
   object DataLoader {
+    // file path
+    val MOVIE_DATA_PATH = ""
+    val RATING_DATA_PATH = ""
+    val TAG_DATA_PATH = ""
+  
+    // table name
+    val MONGO_MOVIE_COLLECTION = "Movie"
+    val MONGO_RATING_COLLECTION = "Rating"
+    val MONGO_TAG_COLLECTION = "Tag"
+    val ES_MOVIE_INDEX = "Movie"
+      
     def main(args: Array[String]): Unit = {
       /**
        * config 192.168.64.138
@@ -630,8 +641,128 @@
   
   ```
   
-- 
+- more...
 
+
+
+
+
+
+## recommender.statistics
+
+- 统计推荐
+
+  历史热门电影统计：只考虑评分次数 
+
+  近期热门电影统计：时间条件
+
+  电影平均评分统计：
+
+  各类别TOP10优质电影统计：
+
+
+
+- recommender.statistics
+
+- 定义数据结构 (+ 计算后返回的数据)
+
+  ```scala
+  
+  case class Movie(mid: Int, name: String, description: String, duration: String, issue: String, shoot: String,
+                   language: String, genres: String, actors: String, directors: String)
+  
+  case class Rating(uid: Int, mid: Int, score: Double, timestamp: Int)
+  
+  case class MongoConfig(uri: String, db: String)
+  
+  /**
+   * 推荐电影
+   * @param mid      电影推荐的id
+   * @param score    电影推荐的评分
+   */
+  case class Recommendation(mid:Int, score:Double)
+  
+  /**
+   * 电影类别推荐
+   * @param genres    电影类别
+   * @param recs      top10的电影集合
+   */
+  case class GenresRecommendation(genres:String, recs:Seq[Recommendation])
+  
+  ```
+
+- 草稿
+
+  ```scala
+  object StatisticsRecommender {
+    // table name (reading)
+    val MONGO_MOVIE_COLLECTION = "Movie"
+    val MONGO_RATING_COLLECTION = "Rating"
+  
+    // table name (writing for statistics)
+    val RATE_MORE_MOVIES = "RateMoreMovies"
+    val RATE_MORE_RECENTLY_MOVIES = "RateMoreRecentlyMovies"
+    val AVERAGE_MOVIES = "AverageMovies"
+    val GENRES_TOP_MOVIES = "GenresTopMovies"
+  
+    def main(args: Array[String]): Unit = {
+      /**
+       * config 192.168.64.138
+       */
+      val config = Map(
+        "spark.cores" -> "local[*]",
+        "mongo.uri" -> "mongodb://192.168.64.138:27017/recommender",
+        "mongo.db" -> "recommender"
+      )
+  
+  
+      // spark entrance
+      val sparkConf = new SparkConf().setMaster(config("spark.cores")).setAppName("StatisticsRecommender")
+      val spark = SparkSession.builder().config(sparkConf).getOrCreate()
+  
+      import spark.implicits._
+  
+      // read data from mongo
+      implicit val mongoConfig = MongoConfig(config("mongo.uri"), config("mongo.db"))
+      val ratingDF = spark.read
+        .option("uri", mongoConfig.uri)
+        .option("collection", MONGO_RATING_COLLECTION)
+        .format("com.mongodb.spark.sql")
+        .load()
+        .as[Rating]
+        .toDF()
+  
+      val movieDF = spark.read
+        .option("uri", mongoConfig.uri)
+        .option("collection", MONGO_MOVIE_COLLECTION)
+        .format("com.mongodb.spark.sql")
+        .load()
+        .as[Movie]
+        .toDF()
+  
+      // create temporary view for rating and movie
+      ratingDF.createOrReplaceTempView("rating")
+      movieDF.createOrReplaceTempView("movie")
+  
+      // statistics (writing to mongo)
+      // TODO: 历史热门电影统计 (评分次数最多的电影)
+      // TODO: 近期热门电影统计 (按照时间排序，年月分组，评分次数最多的电影)
+      // TODO: 电影平均评分统计 (所有电影的平均评分)
+      // TODO: 电影类别top10推荐 (按照电影类型分组，每个类别top10的电影)
+  
+      spark.stop()
+    }
+  }
+  
+  ```
+
+  
+
+
+
+## recommender.
+
+- 基于隐语义模型的协同过滤推荐
 
 
 

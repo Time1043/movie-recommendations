@@ -24,7 +24,6 @@
         <option value="$PROJECT_DIR$/recommender/ContentRecommender/pom.xml" />
         <option value="$PROJECT_DIR$/recommender/KafkaStreaming/pom.xml" />
         <option value="$PROJECT_DIR$/recommender/OfflineRecommender/pom.xml" />
-        <option value="$PROJECT_DIR$/recommender/StatisticsRecommender/pom.xml" />
         <option value="$PROJECT_DIR$/recommender/StreamingRecommender/pom.xml" />
         <option value="$PROJECT_DIR$/website/pom.xml" />
       </set>

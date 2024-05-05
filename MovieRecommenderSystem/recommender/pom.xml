@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>DataLoader</module>
+        <module>StatisticsRecommender</module>
     </modules>
 
     <!-- 仅声明子项目共有的依赖,子项目需要时可引入 -->
@@ -43,9 +44,12 @@
                 <groupId>org.apache.spark</groupId>
                 <artifactId>spark-graphx_2.11</artifactId>
                 <version>${spark.version}</version>
-            </dependency> <dependency>
-            <groupId>org.scala-lang</groupId> <artifactId>scala-library</artifactId> <version>${scala.version}</version>
-        </dependency>
+            </dependency>
+            <dependency>
+                <groupId>org.scala-lang</groupId>
+                <artifactId>scala-library</artifactId>
+                <version>${scala.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

@@ -1,4 +1,4 @@
-package com.time1043.dataloader
+package com.time1043.statistics.dataloader
 
 import com.mongodb.casbah.commons.MongoDBObject
 import com.mongodb.casbah.{MongoClient, MongoClientURI}

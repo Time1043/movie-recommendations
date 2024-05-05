@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="DataLoader" />
+        <module name="StatisticsRecommender" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -17,7 +18,6 @@
       <module name="KafkaStreaming" target="1.8" />
       <module name="OfflineRecommender" target="1.8" />
       <module name="sasa" target="1.8" />
-      <module name="StatisticsRecommender" target="1.8" />
       <module name="StreamingRecommender" target="1.8" />
       <module name="website" target="1.8" />
       <module name="xie" target="1.8" />
