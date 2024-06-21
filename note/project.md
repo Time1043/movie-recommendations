@@ -760,13 +760,58 @@
 
 
 
-## recommender.
+## recommender.Offline
 
 - 基于隐语义模型的协同过滤推荐
+- 用户电影推荐矩阵
+- 电影相似度矩阵
+- 模型评估和参数选取 
 
 
 
+- 代码实现
 
+- 定义数据类型
+
+  ```scala
+  
+  case class Movie(mid: Int, name: String, description: String, duration: String, issue: String, shoot: String,
+                   language: String, genres: String, actors: String, directors: String)
+  
+  case class Rating(uid: Int, mid: Int, score: Double, timestamp: Int)
+  
+  case class MongoConfig(uri: String, db: String)
+  
+  /**
+   * 标准推荐
+   * @param mid
+   * @param score
+   */
+  case class Recommendation(mid: Int, score: Double)
+  
+  /**
+   * 用户推荐
+   * @param uid
+   * @param recs
+   */
+  case class UserRecs(uid: Int, recs: Seq[Recommendation])
+  
+  /**
+   * 电影相似度 电影推荐
+   * @param mid
+   * @param recs
+   */
+  case class MovieRecs(mid: Int, recs: Seq[Recommendation])
+  
+  ```
+
+- 草稿
+
+  ```scala
+  
+  ```
+
+  
 
 
 

@@ -14,6 +14,7 @@
     <modules>
         <module>DataLoader</module>
         <module>StatisticsRecommender</module>
+        <module>OfflineRecommender</module>
     </modules>
 
     <!-- 仅声明子项目共有的依赖,子项目需要时可引入 -->

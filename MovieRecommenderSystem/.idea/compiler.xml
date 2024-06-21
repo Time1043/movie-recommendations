@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="DataLoader" />
         <module name="StatisticsRecommender" />
+        <module name="OfflineRecommender" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -16,7 +17,6 @@
       <module name="businessServer" target="1.8" />
       <module name="ContentRecommender" target="1.8" />
       <module name="KafkaStreaming" target="1.8" />
-      <module name="OfflineRecommender" target="1.8" />
       <module name="sasa" target="1.8" />
       <module name="StreamingRecommender" target="1.8" />
       <module name="website" target="1.8" />

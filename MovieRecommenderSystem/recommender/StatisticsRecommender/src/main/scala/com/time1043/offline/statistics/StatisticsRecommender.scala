@@ -1,4 +1,4 @@
-package com.time1043.statistics
+package com.time1043.offline.statistics
 
 import org.apache.spark.SparkConf
 import org.apache.spark.sql.{DataFrame, SparkSession}
